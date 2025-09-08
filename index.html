@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Generator - SQL语句生成工具</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 顶部导航栏 -->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">SQL Generator</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">SQL生成器</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+            <!-- 主内容区 -->
+            <div class="main-content">
+                <div class="row">
+                    <!-- 左侧表单区 -->
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>表设计</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="table-form">
+                                    <!-- 数据库信息 -->
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="database-name" class="form-label">数据库名</label>
+                                            <input type="text" class="form-control" id="database-name" placeholder="请输入数据库名">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="db-type" class="form-label">数据库类型</label>
+                                            <select class="form-select" id="db-type">
+                                                <option value="mysql" selected>MySQL</option>
+                                                <option value="oracle">Oracle</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 表信息 -->
+                                    <div class="mb-3">
+                                        <label for="table-name" class="form-label">表名</label>
+                                        <input type="text" class="form-control" id="table-name" placeholder="请输入表名（英文）">
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="table-comment" class="form-label">表注释</label>
+                                        <input type="text" class="form-control" id="table-comment" placeholder="请输入表注释（中文）">
+                                    </div>
+                                    
+                                    <!-- 字段列表 -->
+                                    <div class="mb-3">
+                                        <label class="form-label">字段列表</label>
+                                        <div id="fields-container">
+                                            <!-- 字段模板 -->
+                                            <div class="field-item card mb-3">
+                                                <div class="card-body">
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">字段名</label>
+                                                            <input type="text" class="form-control field-name" placeholder="字段名（英文）">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">字段注释</label>
+                                                            <input type="text" class="form-control field-comment" placeholder="字段注释（中文）">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">字段类型</label>
+                                                            <select class="form-select field-type">
+                                                                <option value="varchar">VARCHAR</option>
+                                                                <option value="int">INT</option>
+                                                                <option value="bigint">BIGINT</option>
+                                                                <option value="datetime">DATETIME</option>
+                                                                <option value="text">TEXT</option>
+                                                                <option value="decimal">DECIMAL</option>
+                                                                <option value="tinyint">TINYINT</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">长度/值</label>
+                                                            <input type="text" class="form-control field-length" placeholder="字段长度">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-6">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input field-primary" type="checkbox">
+                                                                <label class="form-check-label">主键</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input field-not-null" type="checkbox">
+                                                                <label class="form-check-label">非空</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input field-auto-increment" type="checkbox">
+                                                                <label class="form-check-label">自增</label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input field-unique" type="checkbox">
+                                                                <label class="form-check-label">唯一</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="form-label">默认值</label>
+                                                            <input type="text" class="form-control field-default" placeholder="默认值">
+                                                        </div>
+                                                        <div class="col-md-6 d-flex align-items-end">
+                                                            <button type="button" class="btn btn-danger remove-field-btn">
+                                                                <i class="bi bi-trash"></i> 删除字段
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- 添加字段按钮 -->
+                                        <button type="button" class="btn btn-secondary" id="add-field-btn">
+                                            <i class="bi bi-plus"></i> 添加字段
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- 生成按钮 -->
+                                    <div class="d-grid gap-2">
+                                        <button type="button" class="btn btn-primary" id="generate-sql-btn">
+                                            <i class="bi bi-lightning"></i> 生成SQL
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧输出区 -->
+                    <div class="col-md-7">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>建表SQL</h5>
+                                <button class="btn btn-sm btn-secondary" id="copy-create-sql-btn">
+                                    <i class="bi bi-clipboard"></i> 复制
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <pre id="create-sql-output" class="sql-output">-- 点击"生成SQL"按钮生成建表语句</pre>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>模拟数据SQL</h5>
+                                <div>
+                                    <input type="number" class="form-control form-control-sm d-inline-block" id="data-count" value="10" style="width: 80px;">
+                                    <button class="btn btn-sm btn-secondary" id="copy-insert-sql-btn">
+                                        <i class="bi bi-clipboard"></i> 复制
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <pre id="insert-sql-output" class="sql-output">-- 点击"生成SQL"按钮生成插入语句</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">SQL Generator©2025 by <a href="https://github.com/user-lwl" target="_blank">user-lwl</a> | <a href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备2024080109号-2</a></span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

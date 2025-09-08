@@ -1,0 +1,148 @@
+/* 全局样式 */
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* 导航栏样式 */
+.navbar {
+    margin-bottom: 20px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* 主内容区样式 */
+.main-content {
+    padding: 0 20px 20px;
+    width: 100%;
+}
+
+/* 卡片样式 */
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* 表单样式 */
+.form-label {
+    font-weight: 500;
+}
+
+/* 字段项样式 */
+.field-item {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.field-item .card-body {
+    padding: 15px;
+}
+
+/* 按钮样式 */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* SQL输出样式 */
+.sql-output {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* 复制按钮动画 */
+@keyframes copy-success {
+    0% { background-color: #28a745; }
+    100% { background-color: #6c757d; }
+}
+
+.copy-success {
+    animation: copy-success 1s;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 0 10px 10px;
+    }
+    
+    .field-item .card-body {
+        padding: 10px;
+    }
+}
+
+/* 字段列表容器 */
+#fields-container {
+    max-height: 600px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+/* 添加字段按钮 */
+#add-field-btn {
+    margin-bottom: 15px;
+}
+
+/* 生成按钮 */
+#generate-sql-btn {
+    font-size: 1.1rem;
+    padding: 10px;
+}
+
+/* SQL关键字高亮 */
+.keyword {
+    color: #c678dd;
+}
+
+.string {
+    color: #98c379;
+}
+
+.number {
+    color: #d19a66;
+}
+
+.comment {
+    color: #5c6370;
+    font-style: italic;
+}
